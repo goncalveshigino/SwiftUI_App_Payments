@@ -31,7 +31,7 @@ struct RowEmprestimo: View {
                     .font(.subheadline)
                     .fontWeight(.semibold)
                 
-                Text("10 Set 2023 at 1:30 PM")
+                Text(payment.timestampString)
                     .font(.footnote)
                     .foregroundColor(Color.gray)
             }
