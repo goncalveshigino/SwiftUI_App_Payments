@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyAaGXjmryEyGvC-XSknu-kuV5ZtBIf-Xqs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>821648383818</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>GoncalvesHigino.PagarDividas</string>
+	<key>PROJECT_ID</key>
+	<string>pagardividas-cc1ba</string>
+	<key>STORAGE_BUCKET</key>
+	<string>pagardividas-cc1ba.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:821648383818:ios:711f310043656a9903abb3</string>
+</dict>
+</plist>
