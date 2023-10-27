@@ -8,6 +8,9 @@
 import Foundation
 import Firebase
 import FirebaseFirestoreSwift
+import FirebaseFirestore
+
+
 
 class UserService {
     
@@ -16,10 +19,18 @@ class UserService {
     
     static var shared = UserService()
     
+    private let userCollection: CollectionReference = Firestore.firestore().collection("users")
+    
+    private func userDocument(userId: String) -> DocumentReference {
+        userCollection.document(userId)
+    }
+    
+
+    
     @MainActor
     func fetchCurrentUser() async throws {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        let snapshot = try await Firestore.firestore().collection("users").document(uid).getDocument()
+        let snapshot = try await userDocument(userId: uid).getDocument()
         let user = try snapshot.data(as: User.self)
         self.currentUser = user
     }
@@ -36,9 +47,9 @@ class UserService {
         }
     }
     
-   
+    
     static func filterUserDebit() async throws -> [User]{
-        let snapshot = try await FirestoreConstants.UserCollection.whereField(User.CodingKeys.debit.rawValue, isEqualTo: true).getDocuments()
+        let snapshot = try await FirestoreConstants.UserCollection.whereField(User.CodingKeys.debt.rawValue, isEqualTo: true).getDocuments()
         return snapshot.documents.compactMap({ try? $0.data(as: User.self)})
     }
     

@@ -1,12 +1,11 @@
 //
-//  KeyBoard.swift
-//  PagarDividas
+//  KeyBoardView.swift
+//  KeyBoardCustom
 //
-//  Created by Goncalves Higino on 29/09/23.
+//  Created by Goncalves Higino on 27/09/23.
 //
 
 import SwiftUI
-
 
 extension TextField {
     @ViewBuilder
@@ -50,13 +49,17 @@ fileprivate struct SetTFKeyboard<Content: View>: UIViewRepresentable {
     }
 }
 
-//struct KeyBoard_Previews: PreviewProvider {
-//    static var previews: some View {
-//        KeyBoard()
+//struct KeyBoardView: View {
+//    var body: some View {
+//        ContentView()
 //    }
 //}
 
-
+struct KeyBoardView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}
 
 // Extracting TextField From the Subviews
 fileprivate extension UIView {
@@ -74,4 +77,3 @@ fileprivate extension UIView {
         return nil
     }
 }
-

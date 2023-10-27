@@ -12,7 +12,8 @@ import Firebase
 class HomeService {
     
     @Published var documentChanges = [DocumentChange]()
-   // @Published var documentChangesValue = [DocumentChange]()
+    
+ 
     
     func observeRecentPayments() {
         
@@ -32,4 +33,9 @@ class HomeService {
             self.documentChanges = changes
         }
     }
+    
+    
+    
+    
+    
 }

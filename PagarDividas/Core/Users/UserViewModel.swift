@@ -17,10 +17,8 @@ class UserViewModel: ObservableObject {
     init(){ Task { try await fetchUsers() }}
     
     enum FilterOption: String, CaseIterable {
-        
         case noFilter
         case devendo
-
     }
   
     
@@ -28,9 +26,7 @@ class UserViewModel: ObservableObject {
 
         switch option {
         case .noFilter: self.users = try await fetchUsers()
-          
         case .devendo: self.users = try await filterUserDebit()
-      
         }
         
         self.selectedFilter = option
@@ -49,4 +45,10 @@ class UserViewModel: ObservableObject {
         self.users = users.filter({ $0.id != currentUid })
         return users
     }
+    
+//    func addUserDebt() {
+//        Task {
+//            try? await service.addUserDebt(debt: 0)
+//        }
+//    }
 }

@@ -10,7 +10,8 @@ import Firebase
 import FirebaseFirestoreSwift
 
 class AuthService {
-    @Published var userSession: FirebaseAuth.User?
+    
+    @Published var userSession:  FirebaseAuth.User?
     
     static let shared = AuthService()
     
@@ -18,6 +19,11 @@ class AuthService {
         self.userSession = Auth.auth().currentUser
         loadCurrentUserData()
     }
+    
+//    func getAuthenticatedUser() throws  {
+//        guard let user = Auth.auth().currentUser else { throw URLError(.badServerResponse) }
+//    }
+
     
     @MainActor
     func login(WithEmail email: String, password: String) async throws {

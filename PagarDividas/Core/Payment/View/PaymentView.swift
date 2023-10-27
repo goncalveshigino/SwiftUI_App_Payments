@@ -11,7 +11,14 @@ struct PaymentView: View {
     
     @FocusState private var showKeyboard: Bool
     @StateObject var viewModel: PaymentViewModel
+    @Environment(\.dismiss) var dismiss
+    
     let user: User
+    
+    
+    private var user1: User? {
+        return viewModel.currentUser
+    }
     
     init(user: User) {
         self.user = user
@@ -21,23 +28,19 @@ struct PaymentView: View {
     var body: some View {
         VStack(alignment: .leading) {
             
-            if user.debit {
-                Text(user.debt, format: .currency(code: "USD"))
-                    .font(.system(size: 30))
-                    .bold()
-                    .foregroundColor(.red)
-                    .padding(.top, 10)
-            }
+         
             
             Spacer()
             
-            TextField("Transferir", value: $viewModel.transfer, format: .number )
+            //TextField("Transferir", value: $viewModel.transfer, format: .number )
+            TextField("Transferir", text: $viewModel.transfer)
               .keyboardType(.decimalPad)
               .multilineTextAlignment(.center)
               .font(.system(size: 30))
               .bold()
+              .padding(.bottom, 50)
             
-            Text("FROM")
+            Text("De")
                 .bold()
                 .padding(.top, 40)
             
@@ -47,19 +50,12 @@ struct PaymentView: View {
                 .overlay() {
                     VStack(alignment: .trailing) {
                         
-                       
                         HStack {
-                            CircularProfileImageView(user: user, size: .xSmall)
-//                            Image(systemName: "person.circle")
-//                                .resizable()
-//                                .scaledToFit()
-//                                .frame(width: 40, height: 40)
-//                                .foregroundColor(.black)
-                            
-                            
-                            Text(user.fulName)
+                            CircularProfileImageView(user: user1, size: .xSmall)
+                            Text(user1?.fulName ?? "")
                                 .font(.title3)
                                 .bold()
+                            
                             
                              Spacer()
                         }
@@ -68,7 +64,7 @@ struct PaymentView: View {
                     }
                 }
             
-            Text("TO")
+            Text("Para")
                 .bold()
                 .padding(.top, 20)
             
@@ -80,69 +76,80 @@ struct PaymentView: View {
                         
                         HStack {
                             CircularProfileImageView(user: user, size: .xSmall)
-//                            Image(systemName: "person.circle")
-//                                .resizable()
-//                                .scaledToFit()
-//                                .frame(width: 40, height: 40)
-//                                .foregroundColor(.black)
-                            
                             
                             Text(user.fulName)
                                 .font(.title3)
                                 .bold()
+                            
                             
                              Spacer()
                         }
                         .padding(.horizontal, 30)
                           
                     }
-                    
-                    
-                    
-                  Button {
-                       viewModel.sendTransfer()
-                   } label: {
-                       HStack {
-                           Text("Transferir")
-                               .fontWeight(.semibold)
-                           Image(systemName: "arrow.right")
-                       }
-                       .foregroundColor(.white)
-                       .frame(width: 232, height: 48)
-                   }
-                   .background(Color(.systemBlue))
-                   .cornerRadius(10)
-                   .padding(.top, 180)
-                   .padding(.leading, 30)
-                   .padding(.trailing, 30)
+                    .contextMenu {
+                        Button("Emprestar") {
+                            viewModel.addUserDebt()
+                        }
+                    }
                 }
+            
+            
+         
+            if user.debt {
+                Button {
+                    viewModel.payUserDebt()
+                    dismiss()
+                 } label: {
+                     HStack {
+                         
+                         Text("Pagar Dividas")
+                             .fontWeight(.semibold)
+                         Image(systemName: "arrow.right")
+                     }
+                     .foregroundColor(.white)
+                     .frame(width: 232, height: 48)
+                 }
+                 .background(Color(.systemBlue))
+                 .cornerRadius(10)
+                 .padding(.top, 10)
+                 .padding(.leading, 60)
+                 .padding(.trailing, 30)
+
+            } else {
+                Button {
+                    viewModel.sendTransfer()
+                    dismiss()
+                 } label: {
+                     HStack {
+                         
+                         Text("Transferir")
+                             .fontWeight(.semibold)
+                         Image(systemName: "arrow.right")
+                     }
+                     .foregroundColor(.white)
+                     .frame(width: 232, height: 48)
+                 }
+                 .background(Color(.systemBlue))
+                 .cornerRadius(10)
+                 .padding(.top, 10)
+                 .padding(.leading, 60)
+                 .padding(.trailing, 30)
+
+            }
             
             Spacer()
 
             
-/*
-//
-//
-//            VStack {
-//                Text(user.fulName)
-//                    .font(.headline)
-//                    .font(.title)
-//                Text(user.email)
-//            }
-//            .padding(.top, 20)
-            
-            
-            
-            
-//            if user.debit == true {
-//                Image(systemName: "train.side.front.car")
-//            }
-            */
+       /*
+        if user.debit == true {
+              Image(systemName: "train.side.front.car")
+        }*/
 
       
                  
         }
-        .navigationBarTitle(user.debit ? "Divida Existente" : "Transferencia")
+        .navigationBarTitle(user.debt ? "Divida Existente" : "Emprestimo")
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(.horizontal, 40)
     }

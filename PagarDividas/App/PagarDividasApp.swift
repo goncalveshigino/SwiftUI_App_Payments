@@ -13,7 +13,7 @@ import Firebase
 struct PagarDividasApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-//    @StateObject var viewModel = AuthViewModel()
+
     
     var body: some Scene {
         WindowGroup {
@@ -33,27 +33,4 @@ class AppDelegate: NSObject, UIApplicationDelegate {
   }
 }
 
-//
-//class Conta {
-//
-//    var saldo: Double = 0
-//
-//
-//    func depositar(_ valor: Double) {
-//        saldo += valor
-//    }
-//
-//    func emprestar(_ contaDestino: Conta,_ valor: Double) -> Double {
-//
-//        if saldo >= 10 {
-//            saldo -= valor
-//            contaDestino.depositar(valor)
-//        }
-//        print("Valor apos a transferencia \(saldo)")
-//
-//        return saldo
-//    }
-//
-//
-//
-//}
+

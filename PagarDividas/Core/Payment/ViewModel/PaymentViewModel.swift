@@ -7,11 +7,17 @@
 
 import Foundation
 import Firebase
+import Combine
 
 class PaymentViewModel: ObservableObject {
     
-    @Published var transfer: Double = 0.0
+    @Published var transfer = "0"
+    @Published var isDebt: Bool = false
     @Published var payments = [Payment]()
+    @Published var currentUser: User?
+    
+    private var cancellables = Set<AnyCancellable>()
+    
     
     
     let service: PaymentService
@@ -19,11 +25,21 @@ class PaymentViewModel: ObservableObject {
     init(user: User) {
         self.service = PaymentService(paymentPartner: user)
         obeservePayment()
+        setUpSubscribers()
+    }
+    
+    private func setUpSubscribers() {
+        UserService.shared.$currentUser.sink { [weak self] user in
+            self?.currentUser = user
+        }.store(in: &cancellables)
     }
     
     func sendTransfer() {
-        service.sendtransfer(transfer)
+        if currentUser?.saldo ?? 0 > 10 {
+            service.sendtransfer(Double(transfer) ?? 0)
+        }
     }
+    
     
     func obeservePayment() {
         service.observePayment() { payments in
@@ -31,5 +47,14 @@ class PaymentViewModel: ObservableObject {
         }
     }
     
+    func addUserDebt() {
+        Task {
+            try? await service.addUserDebt(amount: 0, isDebt: false)
+        }
+    }
+    
+    func payUserDebt() {
+        service.payUserDebt(Double(transfer) ?? 0)
+    }
     
 }

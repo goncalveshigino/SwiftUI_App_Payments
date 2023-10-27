@@ -12,6 +12,9 @@ struct UsersView: View {
     @Binding var seletedUser: User?
     @StateObject var viewModel = UserViewModel()
     @Environment(\.dismiss) var dismiss
+  
+
+ 
     
     var body: some View {
         NavigationStack {
@@ -25,17 +28,9 @@ struct UsersView: View {
                                   Text(user.fulName)
                                       .font(.subheadline)
                                       .fontWeight(.semibold)
-                                  
+                                       
                                   Spacer()
                                   
-                           
-                                  if user.debit {
-                                      Text("- \(user.debt, format: .number)")
-                                          .font(.footnote)
-                                          .bold()
-                                          .foregroundColor(.red)
-                                  }
-                                      
                               }
                               .padding(.leading)
                               

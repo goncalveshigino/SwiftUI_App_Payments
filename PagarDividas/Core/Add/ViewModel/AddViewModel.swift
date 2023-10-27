@@ -24,6 +24,7 @@ class AddViewModel: ObservableObject {
         FirestoreConstants.UserCollection
             .document(uid)
             .updateData([User.CodingKeys.saldo.rawValue: FieldValue.increment(saldo)])
+        
     }
 
 }

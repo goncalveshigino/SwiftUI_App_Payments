@@ -16,8 +16,7 @@ struct User: Codable, Identifiable,Hashable {
     let email: String
     var saldo: Double = 0.0
     var profileImageUrl: String?
-    var debit: Bool = false
-    var debt: Double = 0.0
+    var debt:  Bool = false
   
     
     var id: String {
@@ -34,13 +33,12 @@ struct User: Codable, Identifiable,Hashable {
         case email
         case saldo
         case profileImageUrl
-        case debit
         case debt
     }
 }
 
 extension User {
-    static let MOCK_USER = User(fulName: "Staturo Gojo", email: "saturo@gmail.com", saldo: 0, profileImageUrl: "batman")
+    static let MOCK_USER = User(fulName: "Goncalves Higino", email: "higino@gmail.com", saldo: 0, profileImageUrl: "batman")
 }
 
 //struct User: Identifiable, Hashable, Codable {

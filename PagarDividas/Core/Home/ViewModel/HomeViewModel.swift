@@ -16,8 +16,10 @@ class HomeViewModel: ObservableObject {
     @Published var recentPayments = [Payment]()
     
     
+    
     private var cancellables = Set<AnyCancellable>()
     private let service = HomeService()
+    
     
     init() {
         setUpSubscribers()
@@ -46,5 +48,4 @@ class HomeViewModel: ObservableObject {
             }
         }
     }
-    
 }

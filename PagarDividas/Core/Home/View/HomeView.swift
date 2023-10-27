@@ -20,59 +20,79 @@ struct HomeView: View {
         return viewModel.currentUser
     }
     
-  
+    
+    
+
+    let identifier = Locale.current.currency?.identifier ?? ""
     
     var body: some View {
         VStack(alignment: .leading) {
             
-                  
-            ZStack {
-                
-            Rectangle()
-                   .foregroundColor(.blue)
-                   .cornerRadius(15)
-                   .frame(width: 370, height: 220)
-                   .overlay(){
-                       VStack {
-                           Text("$ \(user?.saldo ?? 0, format: .number)")
-                               .font(.system(size: 50))
-                               .foregroundColor(Color.white)
-                               .bold()
-                           
-                           Text("Saldo da conta")
-                               .font(.subheadline)
-                               .foregroundColor(Color.white)
-                           
-                           HStack {
+        Text(user?.saldo ?? 0, format: .currency(code: identifier))
+                               .font(.system(size: 40))
+                               .foregroundColor(Color.black)
                                
-                               RoundedRectangle(cornerRadius: 0)
-                                   .stroke(Color.gray)
-                                   .frame(width: 140, height: 40)
-                                   .overlay() {
-                                       NavigationLink {
-                                           AddView()
-                                       } label: {
-                                           Text("Depositar")
-                                               .foregroundColor(Color.white)
-                                               .bold()
-                                       }
-                                   }
-                                   
-                               ButtonCustomView(title: "Tranferir"){
-                                   showNewUserView.toggle()
-                                   seletedUser = nil
-                               }
+            
+         Text("Devidas e Emprestimos")
+                    .font(.system(size: 18, weight: .semibold))
+                    .padding(.top, 20)
+           
+                
+            HStack {
+                Rectangle()
+                       .foregroundColor(.blue)
+                       .cornerRadius(15)
+                       .frame(width: 180, height: 220)
+                       .overlay(){
+                           VStack(alignment: .leading) {
+                               Text("Minhas Dividas")
+                                   .font(.headline)
+                                   .padding(.top, 20)
+                                   .foregroundStyle(.white)
+                               
+                                Text("10")
+                                   .font(.system(size: 36, weight: .semibold))
+                                   .foregroundStyle(.gray)
+                                
+                                Rectangle()
+                                    .fill(.white)
+                                    .frame(width: 166, height: 120)
+                                    .cornerRadius(15)
+                                    .padding(.bottom)
+                                    .overlay(){ }
+                               
+                               Spacer()
                            }
-
-                           .padding(.top, 20)
                        }
-                       .padding(.top, 20)
-                   }
-                }
-                .padding(.top, 60)
+                Rectangle()
+                       .foregroundColor(.blue)
+                       .cornerRadius(15)
+                       .frame(width: 180, height: 220)
+                       .overlay(){
+                           VStack(alignment: .leading) {
+                               Text("Minhas Dividas")
+                                   .font(.headline)
+                                   .padding(.top, 20)
+                                   .foregroundStyle(.white)
+                               
+                                Text("10")
+                                   .font(.system(size: 36, weight: .semibold))
+                                   .foregroundStyle(.gray)
+                                
+                                Rectangle()
+                                    .fill(.white)
+                                    .frame(width: 166, height: 120)
+                                    .cornerRadius(15)
+                                    .padding(.bottom)
+                               
+                               Spacer()
+                           }
+                       }
+            }
                
-            Text("Tranferencias recentes")
-                .font(.title3)
+               
+            Text("Emprestimo recentes")
+                .font(.system(size: 16, weight: .semibold))
                 .padding(.top, 20)
            
             
@@ -81,8 +101,8 @@ struct HomeView: View {
                 ForEach(viewModel.recentPayments) { payment in
                     RowEmprestimo(payment: payment)
                 }
+               
             }
-           
             Spacer()
             
         }
@@ -94,7 +114,8 @@ struct HomeView: View {
         })
         .navigationDestination(isPresented: $showScreenTransf, destination: {
             if let user = seletedUser {
-              PaymentView(user: user)
+                //PaymentView(user: user)
+                LendView(user: user)
             }
         })
         .fullScreenCover(isPresented: $showNewUserView, content: {
@@ -107,7 +128,7 @@ struct HomeView: View {
                         CircularProfileImageView(user: user, size: .xSmall)
                     }
 
-                    Text( user?.fulName ?? "")
+                    Text( user?.fulName ?? User.MOCK_USER.fulName)
                         .font(.title3)
                         .fontWeight(.semibold)
                 }

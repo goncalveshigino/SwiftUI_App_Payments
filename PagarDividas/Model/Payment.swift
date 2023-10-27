@@ -34,4 +34,13 @@ struct Payment: Identifiable, Codable, Hashable {
     var timestampString: String {
         return timestamp.dateValue().timestampString()
     }
+    
+    enum CodingKeys: String, CodingKey {
+        case paymentId
+        case fromId
+        case toId
+        case transfer
+        case timestamp
+        case user
+    }
 }

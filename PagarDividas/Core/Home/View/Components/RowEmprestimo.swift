@@ -11,14 +11,7 @@ struct RowEmprestimo: View {
     let payment: Payment
     
     
-//    static let currencyFormatter: NumberFormatter = {
-//        let formatter = NumberFormatter()
-//        
-//        formatter.maximumIntegerDigits = 10
-//        formatter.maximumFractionDigits = 2
-//        
-//        return formatter
-//    }()
+    let identifier = Locale.current.currency?.identifier ?? ""
     
     var body: some View {
         HStack {
@@ -27,7 +20,7 @@ struct RowEmprestimo: View {
 
             
             VStack(alignment: .leading) {
-                Text(payment.user?.fulName ?? "")
+                Text(payment.user?.fulName ?? User.MOCK_USER.fulName)
                     .font(.subheadline)
                     .fontWeight(.semibold)
                 
@@ -37,13 +30,14 @@ struct RowEmprestimo: View {
             }
             
             Spacer()
+            
             payment.isFromCurrentUser 
-            ? Text("- \(payment.transfer, format: .currency(code: "USD"))")
+            ? Text("- \(payment.transfer.angolanMoneyFormatWithoutCurrency())")
                 .font(.footnote)
                 .bold()
                 .foregroundColor(.red)
             
-            : Text("+ \(payment.transfer, format: .currency(code: "USD"))")
+            : Text("+ \(payment.transfer.angolanMoneyFormatWithoutCurrency())")
                 .font(.footnote)
                 .bold()
                 .foregroundColor(.green)

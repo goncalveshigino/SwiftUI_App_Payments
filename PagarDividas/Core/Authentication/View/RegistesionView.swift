@@ -17,12 +17,7 @@ struct RegistrationView: View {
         VStack {
             
             Spacer()
-            //Logo Image
-            Image(systemName: "person.circle")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 150, height: 150)
-                .padding()
+         
             
             //text field
             
