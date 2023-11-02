@@ -9,11 +9,14 @@ import Foundation
 import Combine
 import Firebase
 
+@MainActor
 class HomeViewModel: ObservableObject {
     
    
     @Published var currentUser: User?
     @Published var recentPayments = [Payment]()
+  
+    
     
     
     
@@ -24,6 +27,18 @@ class HomeViewModel: ObservableObject {
     init() {
         setUpSubscribers()
         service.observeRecentPayments()
+    }
+    
+    func loadRecentPayment() {
+        recentPayments.removeAll()
+        service.observeRecentPayments()
+    }
+    
+  
+    
+    func handRefresh() async {
+        try? await Task.sleep(nanoseconds: 1_000_000_000)
+        loadRecentPayment()
     }
     
     private func setUpSubscribers() {

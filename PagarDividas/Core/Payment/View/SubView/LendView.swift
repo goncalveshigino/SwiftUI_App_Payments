@@ -7,8 +7,11 @@
 
 import SwiftUI
 
+
+
 struct LendView: View {
     
+ 
     @StateObject var viewModel: PaymentViewModel
     @Environment(\.dismiss) var dismiss
     @State var isLending: Bool = false
@@ -37,24 +40,17 @@ struct LendView: View {
     
     var body: some View {
             VStack {
-                
-                
-                
-                Text(user.debt ? "Pagar Divida" : "Emprestar")
-                    .font(.system(size: 30))
-                    .bold()
-                    .multilineTextAlignment(.leading)
-                    
-                
+                                
                 Spacer()
                 
-                TextField("Transferir", text: $viewModel.transfer)
+                TextField("", text: $viewModel.transfer)
                     .font(.system(size: 70))
                     .frame(width: 250)
                     .padding(.vertical, 1)
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
                     .multilineTextAlignment(.trailing)
+                    .foregroundStyle(.black)
                 
                 
                     LazyVGrid(columns: Array(repeating: .init(.fixed(80)), count: 3)){
@@ -109,6 +105,8 @@ struct LendView: View {
                 Spacer(minLength: 20)
                 
         }
+        .presentationDetents([.fraction(0.8)])
+        .presentationDragIndicator(.hidden)
     }
     
     func addDigit(_ number: String) {
@@ -141,5 +139,7 @@ struct LendView: View {
 }
 
 #Preview {
-    LendView(user: .MOCK_USER)
+    NavigationStack {
+        LendView(user: .MOCK_USER)
+    }
 }

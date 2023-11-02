@@ -16,8 +16,9 @@ class AddViewModel: ObservableObject {
 
 
 
+  
 
-    func salvar(){
+     func salvar(){
 
         guard let uid = Auth.auth().currentUser?.uid else { return }
 
