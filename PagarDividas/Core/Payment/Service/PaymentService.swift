@@ -150,22 +150,7 @@ struct PaymentService {
             completion(payments)
         }
     }
-    
-//    func observeAmount(completion: @escaping() -> Void) {
-//        
-//        guard let currentUid = Auth.auth().currentUser?.uid else { return }
-//        let paymentPartnerId = paymentPartner.id
-//        
-//        let query = FirestoreConstants.UserCollection.document(paymentPartnerId).collection(currentUid).order(by: "saldo")
-//        
-//        query.addSnapshotListener { snapshot, _ in
-//            guard let changes = snapshot?.documentChanges.filter({$0.type == .modified }) else { return }
-//            var debt = changes.compactMap({try? $0.document.data(as: User.self)})
-//            
-//            completion()
-//        }
-//    }
-    
+        
 }
 
 

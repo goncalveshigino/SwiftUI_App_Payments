@@ -9,9 +9,9 @@ import Foundation
 
 
 extension Double {
-//    func angolanMoneyFormat() -> String {
-//        return "\(String(format: "%.2f", locale: Locale(identifier: "pt"), ))"
-//    }
+    func angolanMoneyFormat() -> String {
+        return "\(String(format: "%.2f", locale: Locale(identifier: "pt") ))"
+    }
     
     func angolanMoneyFormatWithoutCurrency() -> String {
         return "\(String(format: "%.2f", locale: Locale(identifier: "pt"), self))"

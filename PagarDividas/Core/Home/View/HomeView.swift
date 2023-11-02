@@ -28,9 +28,20 @@ struct HomeView: View {
     var body: some View {
         VStack(alignment: .leading) {
             
-        Text(user?.saldo ?? 0, format: .currency(code: identifier))
-                               .font(.system(size: 40))
-                               .foregroundColor(Color.black)
+            Text(user?.saldo ?? 0, format: .currency(code: identifier))
+                       .font(.system(size: 40))
+                       .foregroundColor(Color.black)
+            
+            Spacer()
+            
+            NavigationLink {
+              AddView()
+            } label: {
+                Text("Depositar")
+                    .font(.system(size: 18, weight: .semibold))
+                    .frame(width: 100, height: 50)
+                    .background(Color.blue.opacity(0.3).cornerRadius(10))
+            }
                                
             
          Text("Devidas e Emprestimos")
@@ -59,7 +70,20 @@ struct HomeView: View {
                                     .frame(width: 166, height: 120)
                                     .cornerRadius(15)
                                     .padding(.bottom)
-                                    .overlay(){ }
+                                    .overlay(){
+                                        VStack {
+                                            Text("Total")
+                                                .font(.system(size: 20, weight: .semibold))
+                                                .padding(.bottom,5)
+                                                .multilineTextAlignment(.center)
+                                           
+                                            Text("50.000.00")
+                                                .font(.system(size: 26, weight: .bold))
+                                                .padding(.horizontal, 10)
+                                                .multilineTextAlignment(.trailing)
+                                                .minimumScaleFactor(0.7)
+                                        }
+                                    }
                                
                                Spacer()
                            }
@@ -96,15 +120,17 @@ struct HomeView: View {
                 .padding(.top, 20)
            
             
-        
             ScrollView(.vertical, showsIndicators: false) {
                 ForEach(viewModel.recentPayments) { payment in
                     RowEmprestimo(payment: payment)
                 }
                
             }
+            .refreshable {
+                await viewModel.handRefresh()
+            }
+          
             Spacer()
-            
         }
         .onChange(of: seletedUser, perform: { newValue in
             showScreenTransf = newValue != nil
@@ -115,7 +141,8 @@ struct HomeView: View {
         .navigationDestination(isPresented: $showScreenTransf, destination: {
             if let user = seletedUser {
                 //PaymentView(user: user)
-                LendView(user: user)
+              // LendView(user: user)
+               CardDebtUserView(user: user)
             }
         })
         .fullScreenCover(isPresented: $showNewUserView, content: {

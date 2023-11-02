@@ -51,6 +51,6 @@ struct RowEmprestimo: View {
 
 //struct RowEmprestimo_Previews: PreviewProvider {
 //    static var previews: some View {
-//        RowEmprestimo()
+//        RowEmprestimo(payment: .)
 //    }
 //}

@@ -14,37 +14,27 @@ struct UsersView: View {
     @Environment(\.dismiss) var dismiss
   
 
- 
-    
     var body: some View {
         NavigationStack {
-            ScrollView {
-                  LazyVStack(spacing: 12) {
+                  List {
                       ForEach(viewModel.users) { user in
-                          VStack {
-                              HStack {
-                                  CircularProfileImageView(user: user, size: .small)
-                                  
-                                  Text(user.fulName)
-                                      .font(.subheadline)
-                                      .fontWeight(.semibold)
-                                       
-                                  Spacer()
-                                  
-                              }
-                              .padding(.leading)
-                              
-                              Divider()
-                                  .padding(.leading, 40)
+                          Label(
+                            title: {
+                                Text(user.fulName)
+                                          .font(.subheadline)
+                                          .fontWeight(.semibold)
+                            },
+                            icon: { CircularProfileImageView(user: user, size: .small) }
+                          )
+                          .onTapGesture {
+                              seletedUser = user
+                              dismiss()
                           }
-                              .onTapGesture {
-                                  seletedUser = user
-                                  dismiss()
-                              }
-                              .foregroundColor(.black)
-                              .padding(.horizontal)
+                          .foregroundColor(.black)
+                          .padding(.horizontal)
+                        
                       }
-                  
+        
                   }
                   .navigationTitle("Usuarios")
                   .navigationBarTitleDisplayMode(.inline)
@@ -71,7 +61,6 @@ struct UsersView: View {
                   .padding(.top, 8)
             }
         }
-    }
 }
 
 
@@ -82,3 +71,32 @@ struct UsersView_Previews: PreviewProvider {
         }
     }
 }
+//VStack {
+//    HStack {
+//       // CircularProfileImageView(user: user, size: .small)
+//        Image(systemName: "person.circle.fill")
+//        
+//        Text("Goncalves Luis")
+//            .font(.subheadline)
+//            .fontWeight(.semibold)
+//             
+//        Spacer()
+//        
+//    }
+//    .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
+//        Button("Emprestar") {
+//            //seletedUser = user
+//        }
+//        .tint(.yellow)
+//    })
+//    .padding(.leading)
+//    
+//    Divider()
+//        .padding(.leading, 40)
+//}
+//    .onTapGesture {
+//       // seletedUser = user
+//        dismiss()
+//    }
+//    .foregroundColor(.black)
+//    .padding(.horizontal)
