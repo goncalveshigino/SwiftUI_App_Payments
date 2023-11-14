@@ -43,7 +43,6 @@ struct CardDebtUserView: View {
                     .fill(
                         Color(UIColor.secondarySystemBackground)
                     )
-                  
                     .frame(width: 350, height: 200)
                     .overlay(
                         VStack {
@@ -95,6 +94,8 @@ struct CardDebtUserView: View {
                                    
                                 Spacer()
                                 Text(user.saldo.angolanMoneyFormatWithoutCurrency())
+                                    .font(.system(size: 14, weight: .bold))
+                                    .bold()
                             }
                             .padding(.horizontal, 20)
                         }
@@ -109,7 +110,7 @@ struct CardDebtUserView: View {
             
             ScrollView {
                 ForEach(viewModel.payments){ payment in
-                    RowEmprestimo(payment: payment)
+                    RowEmprestimo(payment: payment, viewModel: viewModel)
                 }
                 .padding(.horizontal, 20)
             }
