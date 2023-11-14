@@ -38,7 +38,6 @@ struct PaymentService {
         
         
 
-        
         let data: [String:Any] = [
             UserDebt.CodingKeys.fromId.rawValue: currentUid,
             UserDebt.CodingKeys.toId.rawValue : partnerId,

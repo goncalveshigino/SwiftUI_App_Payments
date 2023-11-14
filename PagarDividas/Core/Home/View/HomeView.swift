@@ -19,99 +19,31 @@ struct HomeView: View {
     private var user: User? {
         return viewModel.currentUser
     }
-    
-    
-    
 
-    let identifier = Locale.current.currency?.identifier ?? ""
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading){
             
-            Text(user?.saldo ?? 0, format: .currency(code: identifier))
-                       .font(.system(size: 40))
-                       .foregroundColor(Color.black)
+            if let user = user {
+                Text(user.saldo.angolanMoneyFormatWithoutCurrency())
+                    .font(.system(size: 30, weight: .bold))
+            }
+            
+
             
             Spacer()
             
-            NavigationLink {
-              AddView()
-            } label: {
-                Text("Depositar")
-                    .font(.system(size: 18, weight: .semibold))
-                    .frame(width: 100, height: 50)
-                    .background(Color.blue.opacity(0.3).cornerRadius(10))
-            }
-                               
-            
+           
          Text("Devidas e Emprestimos")
                     .font(.system(size: 18, weight: .semibold))
                     .padding(.top, 20)
+                    .multilineTextAlignment(.leading)
            
                 
             HStack {
-                Rectangle()
-                       .foregroundColor(.blue)
-                       .cornerRadius(15)
-                       .frame(width: 180, height: 220)
-                       .overlay(){
-                           VStack(alignment: .leading) {
-                               Text("Minhas Dividas")
-                                   .font(.headline)
-                                   .padding(.top, 20)
-                                   .foregroundStyle(.white)
-                               
-                                Text("10")
-                                   .font(.system(size: 36, weight: .semibold))
-                                   .foregroundStyle(.gray)
-                                
-                                Rectangle()
-                                    .fill(.white)
-                                    .frame(width: 166, height: 120)
-                                    .cornerRadius(15)
-                                    .padding(.bottom)
-                                    .overlay(){
-                                        VStack {
-                                            Text("Total")
-                                                .font(.system(size: 20, weight: .semibold))
-                                                .padding(.bottom,5)
-                                                .multilineTextAlignment(.center)
-                                           
-                                            Text("50.000.00")
-                                                .font(.system(size: 26, weight: .bold))
-                                                .padding(.horizontal, 10)
-                                                .multilineTextAlignment(.trailing)
-                                                .minimumScaleFactor(0.7)
-                                        }
-                                    }
-                               
-                               Spacer()
-                           }
-                       }
-                Rectangle()
-                       .foregroundColor(.blue)
-                       .cornerRadius(15)
-                       .frame(width: 180, height: 220)
-                       .overlay(){
-                           VStack(alignment: .leading) {
-                               Text("Minhas Dividas")
-                                   .font(.headline)
-                                   .padding(.top, 20)
-                                   .foregroundStyle(.white)
-                               
-                                Text("10")
-                                   .font(.system(size: 36, weight: .semibold))
-                                   .foregroundStyle(.gray)
-                                
-                                Rectangle()
-                                    .fill(.white)
-                                    .frame(width: 166, height: 120)
-                                    .cornerRadius(15)
-                                    .padding(.bottom)
-                               
-                               Spacer()
-                           }
-                       }
+                CardDebtView(title: "Quantos eu devo?")
+                Spacer()
+                CardDebtView(title: "Quantos me devem?")
             }
                
                
@@ -122,7 +54,7 @@ struct HomeView: View {
             
             ScrollView(.vertical, showsIndicators: false) {
                 ForEach(viewModel.recentPayments) { payment in
-                    RowEmprestimo(payment: payment)
+                    RowEmprestimoRescent(payment: payment)
                 }
                
             }
@@ -180,6 +112,51 @@ struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             HomeView()
+        }
+    }
+}
+
+struct CardDebtView: View {
+    let title: String
+    
+    var body: some View {
+        VStack {
+            Rectangle()
+                .foregroundColor(.blue)
+                .cornerRadius(15)
+                .frame(width: 180, height: 220)
+                .overlay(){
+                    VStack(alignment: .leading) {
+                        Text(title)
+                            .font(.headline)
+                            .padding(.top, 20)
+                            .foregroundStyle(.white)
+                        
+                        Text("10")
+                            .font(.system(size: 36, weight: .semibold))
+                            .foregroundStyle(.gray)
+                        
+                        Rectangle()
+                            .fill(.white)
+                            .frame(width: 166, height: 120)
+                            .cornerRadius(15)
+                            .padding(.bottom)
+                            .overlay(){
+                                VStack {
+                                    Text("Total")
+                                        .font(.system(size: 20, weight: .semibold))
+                                        .padding(.bottom,5)
+                                        .multilineTextAlignment(.center)
+                                    
+                                    Text("50.000.00")
+                                        .font(.system(size: 26, weight: .bold))
+                                        .padding(.horizontal, 10)
+                                        .multilineTextAlignment(.trailing)
+                                        .minimumScaleFactor(0.7)
+                                }
+                            }
+                    }
+                }
         }
     }
 }

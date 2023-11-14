@@ -40,17 +40,19 @@ struct LendView: View {
     
     var body: some View {
             VStack {
-                                
-                Spacer()
                 
+            
                 TextField("", text: $viewModel.transfer)
                     .font(.system(size: 70))
-                    .frame(width: 250)
+                    .frame(maxWidth: .infinity)
                     .padding(.vertical, 1)
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
                     .multilineTextAlignment(.trailing)
                     .foregroundStyle(.black)
+                    .background(.blue.opacity(0.3))
+                
+                Spacer()
                 
                 
                     LazyVGrid(columns: Array(repeating: .init(.fixed(80)), count: 3)){
@@ -75,7 +77,7 @@ struct LendView: View {
                             .font(.largeTitle)
                             .bold()
                             .frame(width: 80, height: 80)
-                            .background(.gray)
+                            .background(.blue.opacity(0.3))
                             .foregroundStyle(.white)
                             .clipShape(Circle())
                     }
