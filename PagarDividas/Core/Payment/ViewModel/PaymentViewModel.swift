@@ -35,7 +35,8 @@ class PaymentViewModel: ObservableObject {
     }
     
     func sendTransfer() {
-        if currentUser?.saldo ?? 0 > 10 {
+        guard let saldo = currentUser?.saldo else { return }
+        if  saldo > 0  {
             service.sendtransfer(Double(transfer) ?? 0)
         }
     }

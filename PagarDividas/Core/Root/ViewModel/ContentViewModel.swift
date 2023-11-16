@@ -6,7 +6,8 @@
 //
 
 import Combine
-import Firebase
+import FirebaseAuth
+import FirebaseCore
 
 class ContentViewModel: ObservableObject {
     

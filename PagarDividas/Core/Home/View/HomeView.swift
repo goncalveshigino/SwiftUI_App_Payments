@@ -11,9 +11,12 @@ struct HomeView: View {
     
     
     @StateObject var viewModel = HomeViewModel()
+    @StateObject var vm = DepositViewModel()
     @State private var showNewUserView = false
     @State private var seletedUser: User?
     @State private var showScreenTransf = false
+    @State var showSheet: Bool = false
+    @State var isLoading: Bool = false
     
     
     private var user: User? {
@@ -24,29 +27,66 @@ struct HomeView: View {
     var body: some View {
         VStack(alignment: .leading){
             
+            
             if let user = user {
+                if user.totalDebtAmount > 0 || user.valueToReceive > 0 {
+                    
                 Text(user.saldo.angolanMoneyFormatWithoutCurrency())
                     .font(.system(size: 30, weight: .bold))
+                    
+                    Spacer()
+                    
+                 Text("Devidas e Emprestimos")
+                            .font(.system(size: 18, weight: .semibold))
+                            .padding(.top, 20)
+                            .multilineTextAlignment(.leading)
+                    
+                    HStack {
+                        CardDebtView(
+                            title: "Quantos eu devo?",
+                            totalDebtAmount: user.totalDebtAmount,
+                            numberOfDebts: 3)
+                            .onTapGesture {
+                                showNewUserView.toggle()
+                                seletedUser = nil
+                            }
+                        Spacer()
+                        CardDebtView(
+                            title: "Quantos me devem?",
+                            totalDebtAmount: user.valueToReceive,
+                            numberOfDebts: 0)
+                            .onTapGesture {
+                                showNewUserView.toggle()
+                                seletedUser = nil
+                            }
+                    }
+                } else {
+                    
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color.blue)
+                        .frame(width: 350, height: 220)
+                        .overlay(
+                            VStack {
+                               
+                                Text(user.saldo.angolanMoneyFormatWithoutCurrency())
+                                    .font(.system(size: 30, weight: .bold))
+                                    .foregroundStyle(.white)
+                                    .minimumScaleFactor(0.5)
+                                
+                                ButtonCustomView(title: "Depositar") {
+                                    showSheet.toggle()
+                                }
+                                .sheet(isPresented: $showSheet) {
+                                    DepositView(viewModel: vm, user: user)
+                                }
+                            }
+                        )
+                        .padding(.top, 40)
+                }
             }
             
-
-            
-            Spacer()
-            
+    
            
-         Text("Devidas e Emprestimos")
-                    .font(.system(size: 18, weight: .semibold))
-                    .padding(.top, 20)
-                    .multilineTextAlignment(.leading)
-           
-                
-            HStack {
-                CardDebtView(title: "Quantos eu devo?")
-                Spacer()
-                CardDebtView(title: "Quantos me devem?")
-            }
-               
-               
             Text("Emprestimo recentes")
                 .font(.system(size: 16, weight: .semibold))
                 .padding(.top, 20)
@@ -72,8 +112,6 @@ struct HomeView: View {
         })
         .navigationDestination(isPresented: $showScreenTransf, destination: {
             if let user = seletedUser {
-                //PaymentView(user: user)
-              // LendView(user: user)
                CardDebtUserView(user: user)
             }
         })
@@ -118,6 +156,8 @@ struct HomeView_Previews: PreviewProvider {
 
 struct CardDebtView: View {
     let title: String
+    let totalDebtAmount: Double
+    let numberOfDebts: Int
     
     var body: some View {
         VStack {
@@ -132,7 +172,7 @@ struct CardDebtView: View {
                             .padding(.top, 20)
                             .foregroundStyle(.white)
                         
-                        Text("10")
+                        Text("\(numberOfDebts)")
                             .font(.system(size: 36, weight: .semibold))
                             .foregroundStyle(.gray)
                         
@@ -148,8 +188,8 @@ struct CardDebtView: View {
                                         .padding(.bottom,5)
                                         .multilineTextAlignment(.center)
                                     
-                                    Text("50.000.00")
-                                        .font(.system(size: 26, weight: .bold))
+                                    Text(totalDebtAmount.angolanMoneyFormatWithoutCurrency())
+                                        .font(.system(size: 20, weight: .bold))
                                         .padding(.horizontal, 10)
                                         .multilineTextAlignment(.trailing)
                                         .minimumScaleFactor(0.7)

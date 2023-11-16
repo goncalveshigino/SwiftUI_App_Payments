@@ -59,22 +59,42 @@ struct CardDebtUserView: View {
                                 Spacer()
                                 
                                 
-                                Button("Quitar Divida") {
-                                    showSheet.toggle()
+                                if user.debt {
+                                    Button("Quitar Divida") {
+                                        showSheet.toggle()
+                                    }
+                                    .sheet(isPresented: $showSheet, content: {
+                                        LendView(user: user)
+                                     })
+                                    .font(.headline)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(.white)
+                                    .padding()
+                                    .padding(.horizontal, 20)
+                                    .background(
+                                        Color.blue
+                                            .cornerRadius(10)
+                                            .shadow(radius: 10)
+                                    )
+                                } else {
+                                    Button("Emprestar") {
+                                        viewModel.addUserDebt()
+                                        showSheet.toggle()
+                                    }
+                                    .sheet(isPresented: $showSheet, content: {
+                                        LendView(user: user)
+                                     })
+                                    .font(.headline)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(.white)
+                                    .padding()
+                                    .padding(.horizontal, 20)
+                                    .background(
+                                        Color.blue
+                                            .cornerRadius(10)
+                                            .shadow(radius: 10)
+                                    )
                                 }
-                                .sheet(isPresented: $showSheet, content: {
-                                    LendView(user: user)
-                                 })
-                                .font(.headline)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(.white)
-                                .padding()
-                                .padding(.horizontal, 20)
-                                .background(
-                                    Color.blue
-                                        .cornerRadius(10)
-                                        .shadow(radius: 10)
-                                )
                                 
                                   
                             }
@@ -93,7 +113,7 @@ struct CardDebtUserView: View {
                                     .padding(.bottom,4)
                                    
                                 Spacer()
-                                Text(user.saldo.angolanMoneyFormatWithoutCurrency())
+                                Text(user.totalDebtAmount.angolanMoneyFormatWithoutCurrency())
                                     .font(.system(size: 14, weight: .bold))
                                     .bold()
                             }
