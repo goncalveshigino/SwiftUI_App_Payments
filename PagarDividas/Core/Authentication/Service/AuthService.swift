@@ -20,10 +20,6 @@ class AuthService {
         loadCurrentUserData()
     }
     
-//    func getAuthenticatedUser() throws  {
-//        guard let user = Auth.auth().currentUser else { throw URLError(.badServerResponse) }
-//    }
-
     
     @MainActor
     func login(WithEmail email: String, password: String) async throws {
@@ -68,3 +64,9 @@ class AuthService {
         Task { try await UserService.shared.fetchCurrentUser() }
     }
 }
+
+//MARK: SIGN IN EMAIL
+//extension AuthService {
+//    
+//    func createUser(email)
+//}

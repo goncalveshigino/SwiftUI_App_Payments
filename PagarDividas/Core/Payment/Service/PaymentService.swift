@@ -126,6 +126,10 @@ struct PaymentService {
         
         FirestoreConstants.UserCollection.document(currentUid).updateData([User.CodingKeys.saldo.rawValue: FieldValue.increment(-value)])
         FirestoreConstants.UserCollection.document(userId).updateData([User.CodingKeys.saldo.rawValue: FieldValue.increment(value)])
+        
+        FirestoreConstants.UserCollection.document(userId).updateData([User.CodingKeys.totalDebtAmount.rawValue: FieldValue.increment(value)])
+        
+        FirestoreConstants.UserCollection.document(currentUid).updateData([User.CodingKeys.valueToReceive.rawValue: FieldValue.increment(value)])
          
     }
     
@@ -149,7 +153,7 @@ struct PaymentService {
             completion(payments)
         }
     }
-        
+    
 }
 
 

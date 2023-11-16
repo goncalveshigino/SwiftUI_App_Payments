@@ -14,7 +14,7 @@ struct ButtonCustomView: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 0)
             .stroke(Color.gray)
-            .frame(width: 140, height: 40)
+            .frame(width: 240, height: 40)
             .overlay() {
                 Button {
                     action()

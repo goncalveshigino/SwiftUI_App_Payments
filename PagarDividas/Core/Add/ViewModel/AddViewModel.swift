@@ -9,23 +9,15 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 
-class AddViewModel: ObservableObject {
+class DepositViewModel: ObservableObject {
 
-    @Published var saldo: Double = 0.0
+    @Published var saldo: String = "0"
     @Published var showAlert = false
+    
+    var service = DepositService()
 
-
-
-  
-
-     func salvar(){
-
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-
-        FirestoreConstants.UserCollection
-            .document(uid)
-            .updateData([User.CodingKeys.saldo.rawValue: FieldValue.increment(saldo)])
-        
+    func deposit(){
+        service.deposit(Double(saldo) ?? 0)
     }
 
 }
